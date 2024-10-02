@@ -9,7 +9,7 @@
         <li class="submenu">
             <a href="javascript:void(0);"><img src="/admin-panel/assets/img/icons/product.svg" alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
             <ul>
-                <li><a href="productlist.html">Product List</a></li>
+                <li><a href="{{ route('products.index') }}">Product List</a></li>
            
                 <li><a href="{{ route('categories.index') }}">Category List</a></li>
             

@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index()
     { 
        try{
-        $categories = Category::all(); 
+        $categories = Category::orderBy('order', 'asc')->get(); 
         return view('admin-panel.category.index', compact('categories'));
        }
        catch(\Exception $e){
