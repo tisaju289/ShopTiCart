@@ -7,7 +7,7 @@
         <div class="page-header">
             <div class="page-title">
                 <h4>Add Product</h4>
-                <h6><a href="{{ route('products.index')}}">All Brand /</a> Create new product category</h6>
+                <h6><a href="{{ route('products.index')}}">All Product /</a> Create new product category</h6>
             </div>
         </div>
 

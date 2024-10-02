@@ -71,8 +71,8 @@
                         <td>
                             <a href="javascript:void(0);" class="product-img">
                                 <!-- Check if the product has an image -->
-                                @if($product->img)
-                                    <img src="{{ asset('storage/' . $product->img) }}" alt="product" style="width: 30px; height: 30px; object-fit: cover;">
+                                @if($product->image)
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="product" style="width: 30px; height: 30px; object-fit: cover;">
                                 @else
                                     <img src="/path/to/default-image.jpg" alt="default image" style="width: 50px; height: 50px; object-fit: cover;">
                                 @endif
