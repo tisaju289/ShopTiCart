@@ -34,28 +34,34 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'order' => 'nullable|integer',
-        ]);
-
-        // Handle file upload if present
-        $imgPath = null;
-        if ($request->hasFile('img')) {
-            $imgPath = $request->file('img')->store('brands', 'public');
+       
+       try{
+        $slug = $request->input('slug') ?: Str::slug($request->input('name'));
+    
+        $brand = new Brand();
+        $brand->name = $request->input('name');
+        $brand->slug = $slug;
+        $brand->status = $request->has('status') ? true : false;
+        $brand->order = $request->input('order');
+      
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $brand->img = $imagePath;
         }
+    
+        $brand->save();
+        setToastMessage('Brand Created successfully.', 'success');
+        return redirect()->back();
+       }
+       catch(\Exception $e){
+        setToastMessage('Brand can not be created.', 'error');
+        return redirect()->back();
+       }
 
-        Brand::create([
-            'name' => $request->input('name'),
-            'slug' => $request->input('slug') ?: Str::slug($request->input('name')),
-            'img' => $imgPath,
-            'status' => $request->has('status') ? true : false,
-            'order' => $request->input('order')
-        ]);
 
-        setToastMessage('Brand created successfully', 'success');
-        return redirect()->route('brands.index');
+
+
+
     }
 
     /**
@@ -78,30 +84,33 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Brand $brand)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'order' => 'nullable|integer',
-        ]);
-
-        // Handle file upload if present
-        $imgPath = $brand->img;
-        if ($request->hasFile('img')) {
-            $imgPath = $request->file('img')->store('brands', 'public');
+    
+    
+        try{
+        $slug = $request->input('slug') ?: Str::slug($request->input('name'));
+    
+        $brand = Brand::findOrFail($id);
+        $brand->name = $request->input('name');
+        $brand->slug = $slug;
+        $brand->status = $request->has('status') ? true : false;
+        $brand->order = $request->input('order');
+    
+      
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $brand->img = $imagePath;
         }
-
-        $brand->update([
-            'name' => $request->input('name'),
-            'slug' => $request->input('slug') ?: Str::slug($request->input('name')),
-            'img' => $imgPath,
-            'status' => $request->has('status') ? true : false,
-            'order' => $request->input('order')
-        ]);
-
-        setToastMessage('Brand updated successfully', 'success');
+    
+        $brand->save();
+        setToastMessage('brand Upadated successfully.', 'success');
         return redirect()->route('brands.index');
+        }
+        catch(\Exception $e){
+            setToastMessage('brand can not be updated.', 'error');
+            return redirect()->back();
+        }
     }
 
     /**

@@ -10,15 +10,11 @@
             <a href="javascript:void(0);"><img src="/admin-panel/assets/img/icons/product.svg" alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
             <ul>
                 <li><a href="productlist.html">Product List</a></li>
-                <li><a href="addproduct.html">Add Product</a></li>
+           
                 <li><a href="{{ route('categories.index') }}">Category List</a></li>
-                <li><a href="addcategory.html">Add Category</a></li>
-                <li><a href="subcategorylist.html">Sub Category List</a></li>
-                <li><a href="subaddcategory.html">Add Sub Category</a></li>
-                <li><a href="brandlist.html">Brand List</a></li>
-                <li><a href="addbrand.html">Add Brand</a></li>
-                <li><a href="importproduct.html">Import Products</a></li>
-                <li><a href="barcode.html">Print Barcode</a></li>
+            
+                <li><a href="{{ route('brands.index') }}">Brand List</a></li>
+
             </ul>
         </li>
 
