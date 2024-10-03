@@ -9,12 +9,12 @@
 
                 <div class="page-header">
                 <div class="page-title">
-                <h4>Product Brand List</h4>
-                <h6>View/Search product brand</h6>
+                <h4>Product banner List</h4>
+                <h6>View/Search product banner</h6>
                 </div>
                 <div class="page-btn">
-                <a href="{{route('brands.create')}}" class="btn btn-added">
-                <img src="/admin-panel/assets/img/icons/plus.svg" class="me-1" alt="img">Add Brand
+                <a href="{{route('banners.create')}}" class="btn btn-added">
+                <img src="/admin-panel/assets/img/icons/plus.svg" class="me-1" alt="img">Add banner
                 </a>
                 </div>
                 </div>
@@ -59,39 +59,48 @@
                 
                 <th>Order</th>
                 <th>Image</th>
-                <th>brand Name</th>
+                <th>banner Name</th>
+                <th>Status</th>
                 <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach ($brands as $brand)
+                    @foreach ($banners as $banner)
                     <tr>
-                        <td>{{ $brand->order }}</td>
+                        <td>{{ $banner->order }}</td>
                         <td>
                             <a href="javascript:void(0);" class="product-img">
-                                <!-- Check if the brand has an image -->
-                                @if($brand->img)
-                                    <img src="{{ asset('storage/' . $brand->img) }}" alt="product" style="width: 30px; height: 30px; object-fit: cover;">
+                                <!-- Check if the banner has an image -->
+                                @if($banner->image)
+                                    <img src="{{ asset('storage/' . $banner->image) }}" alt="product" style="width: 30px; height: 30px; object-fit: cover;">
                                 @else
                                     <img src="/path/to/default-image.jpg" alt="default image" style="width: 50px; height: 50px; object-fit: cover;">
                                 @endif
                             </a>
                         </td>
                         <td>
-                            <a href="javascript:void(0);">{{ $brand->name }}</a>
+                            <a href="javascript:void(0);">{{ $banner->title }}</a>
                         </td>
                         <td>
+                            @if ($banner->status == 1)
+                                <span class="badge bg-success">Active</span>
+                            @else
+                                <span class="badge bg-danger">Inactive</span>
+                            @endif
+                        </td>
+                       
+                        <td>
                             <!-- Edit Icon -->
-                            <a class="me-3" href="{{ route('brands.edit', $brand->id) }}">
+                            <a class="me-3" href="{{ route('banners.edit', $banner->id) }}">
                                 <img src="/admin-panel/assets/img/icons/edit.svg" alt="img">
                             </a>
                             <!-- Delete Icon with confirmation -->
-                            <a href="javascript:void(0);" onclick="confirmDelete({{ $brand->id }})" class="me-3">
+                            <a href="javascript:void(0);" onclick="confirmDelete({{ $banner->id }})" class="me-3">
                                 <img src="/admin-panel/assets/img/icons/delete.svg" alt="img">
                             </a>
                 
                             <!-- Hidden delete form -->
-                            <form id="delete-form-{{ $brand->id }}" action="{{ route('brands.destroy', $brand->id) }}" method="POST" style="display: none;">
+                            <form id="delete-form-{{ $banner->id }}" action="{{ route('banners.destroy', $banner->id) }}" method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')
                             </form>
@@ -108,9 +117,9 @@
 
 
 <script>
-    function confirmDelete(brandId) {
-        if (confirm('Are you sure you want to delete this brand?')) {
-            document.getElementById('delete-form-' + brandId).submit();
+    function confirmDelete(bannerId) {
+        if (confirm('Are you sure you want to delete this banner?')) {
+            document.getElementById('delete-form-' + bannerId).submit();
         }
     }
     

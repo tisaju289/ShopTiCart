@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller
@@ -13,7 +15,7 @@ class BannerController extends Controller
     public function index()
     {
         $banners = Banner::all();
-        return view('admin-panel.pages.banner.index', compact('banners'));
+        return view('admin-panel.banner.index', compact('banners'));
     }
 
     /**
@@ -21,7 +23,8 @@ class BannerController extends Controller
      */
     public function create()
     {
-        return view('admin-panel.pages.banner.create');
+        $products = Product::all();
+        return view('admin-panel.banner.create', compact('products'));
     }
 
     /**
@@ -30,11 +33,20 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $banner = new Banner();
+        $banner->product_id = $request->product_id;
         $banner->title = $request->title;
-        $banner->link = $request->link;
-        $banner->image = $request->image;
+        $banner->slug = Str::slug($request->title);
+        $banner->order = $request->order;
+        $banner->status = $request->has('status') ? true : false;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('banners', 'public');
+            $banner->image = $imagePath;
+        }
+
         $banner->save();
-        return redirect()->route('banner.index');
+        setToastMessage('Banner Created successfully.', 'success');
+        return redirect()->route('banners.index');
     }
 
     /**
@@ -48,24 +60,42 @@ class BannerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Banner $banner)
+    public function edit($is)
     {
-        //
+        $products = Product::all();
+        $banner = Banner::findOrFail($is);
+        return view('admin-panel.banner.edit', compact('banner', 'products'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Banner $banner)
+    public function update(Request $request, $id)
     {
-        //
+        $banner = Banner::findOrFail($id);
+        $banner->product_id = $request->product_id;
+        $banner->title = $request->title;
+        $banner->slug = Str::slug($request->title);
+        $banner->order = $request->order;
+        $banner->status = $request->has('status') ? true : false;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('banners', 'public');
+            $banner->image = $imagePath;
+        }
+        $banner->save();
+        setToastMessage('Banner Updated successfully.', 'success');
+        return redirect()->route('banners.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Banner $banner)
+    public function destroy($id)
     {
-        //
+        $banner = Banner::findOrFail($id);
+        $banner->delete();
+        setToastMessage('Banner Deleted successfully.', 'success');
+        return redirect()->route('banners.index');
+        
     }
 }

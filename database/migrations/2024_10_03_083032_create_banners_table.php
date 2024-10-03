@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('title')->nullable();
             $table->string('slug')->nullable()->unique();
-            $table->integer('width')->nullable();
-            $table->integer('height')->nullable();
             $table->boolean('status')->default(false);
             $table->string('image')->nullable();
             $table->integer('order')->nullable();
