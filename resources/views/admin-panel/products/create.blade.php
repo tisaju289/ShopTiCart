@@ -34,6 +34,13 @@
                                     <input type="text" id="productSlug" name="slug" class="form-control" value="{{ old('slug') }}">
                                 </div>
                             </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="code">Product Code</label>
+                                    <input type="text"  name="code" class="form-control" value="{{ old('code') }}">
+                                </div>
+                            </div>
                 
                             <!-- Description -->
                             <div class="col-lg-12">
@@ -128,7 +135,7 @@
                             </div>
                 
                             <!-- Category -->
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="category_id">Category</label>
                                     <select name="category_id" class="form-control">
@@ -143,7 +150,7 @@
                             </div>
                 
                             <!-- Brand -->
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="brand_id">Brand</label>
                                     <select name="brand_id" class="form-control">
@@ -156,15 +163,21 @@
                                     </select>
                                 </div>
                             </div>
-                
-                            <!-- Image -->
-                            {{-- <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="image">Product Image</label>
-                                    <input type="file" name="image" class="form-control-file">
-                                </div>
-                            </div> --}}
 
+
+                            <div class="col-lg-12">
+                                <div class="card-header">
+                                    <strong>Product Collections</strong>
+                                </div>
+                                <div class="card-body">
+                                    @foreach($collections as $collection)
+                                    <div class="form-check">
+                                        <input type="checkbox" name="collections[]" value="{{ $collection->id }}" class="form-check-input">
+                                        <label class="form-check-label">{{ $collection->name }}</label>
+                                    </div>
+                                @endforeach
+                                </div>
+                            </div>
 
                             
                         <div class="col-lg-12">
@@ -182,7 +195,7 @@
                         
                 
                    
-                  
+            
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="gallery">Product Gallery</label>

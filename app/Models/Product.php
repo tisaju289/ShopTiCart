@@ -23,4 +23,9 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public function collections()
+    {
+        return $this->belongsToMany(Collection::class, 'collection_items', 'product_id', 'collection_id');
+    }
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\CollectionItem;
 
 class ProductController extends Controller
 {
@@ -24,9 +26,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $collections = Collection::all();
         $categories = Category::all();
         $brands = Brand::all();
-        return view('admin-panel.products.create', compact('categories', 'brands'));
+        return view('admin-panel.products.create', compact('collections', 'categories', 'brands'));
     }
 
     /**
@@ -38,6 +41,7 @@ class ProductController extends Controller
        
         $product = new Product();
         $product->name = $request->name;
+        $product->code = $request->code;
         $product->slug = $request->slug ?: Str::slug($request->name);
         $product->description = $request->description;
         $product->short_description = $request->short_description;
@@ -72,6 +76,14 @@ class ProductController extends Controller
             $product->gallery = json_encode($gallery);
         }
         $product->save();
+        if ($request->has('collections')) {
+            foreach ($request->collections as $collectionId) {
+                CollectionItem::create([
+                    'product_id' => $product->id,
+                    'collection_id' => $collectionId
+                ]);
+            }
+        }
         setToastMessage('Product Created successfully.', 'success');
         return redirect()->back();
 
@@ -94,7 +106,9 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $categories = Category::all();
         $brands = Brand::all();
-        return view('admin-panel.products.edit', compact('product', 'categories', 'brands'));
+        $collections = Collection::all();
+        $selectedCollections = $product->collections->pluck('id')->toArray();
+        return view('admin-panel.products.edit', compact('product', 'categories', 'brands', 'collections', 'selectedCollections'));
     }
 
     /**
@@ -104,6 +118,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->name = $request->name;
+        $product->code = $request->code;
         $product->slug = $request->slug ?: Str::slug($request->name);
         $product->description = $request->description;
         $product->short_description = $request->short_description;
@@ -135,8 +150,23 @@ class ProductController extends Controller
             $product->gallery = json_encode($gallery);
         }
         $product->save();
+
+
+
+        if ($request->has('collections')) {
+            // Delete existing collections
+            CollectionItem::where('product_id', $product->id)->delete();
+    
+            // Insert updated collections
+            foreach ($request->collections as $collectionId) {
+                CollectionItem::create([
+                    'product_id' => $product->id,
+                    'collection_id' => $collectionId
+                ]);
+            }
+        }
         setToastMessage('Product updated successfully.', 'success');
-        return redirect()->back();
+        return redirect()->route('products.index');
     }
 
     /**

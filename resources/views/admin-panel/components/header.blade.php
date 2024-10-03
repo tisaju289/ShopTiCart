@@ -21,7 +21,15 @@
 
     <ul class="nav user-menu">
 
-    <li class="nav-item">
+        <li class="nav-item">
+            <a class="btn nav-link" href="{{ url('/')}}">
+                <i class="fas fa-shopping-cart"></i> Visit Shop
+            </a>
+        </li>
+        
+
+
+    {{-- <li class="nav-item">
     <div class="top-nav-search">
     <a href="javascript:void(0);" class="responsive-search">
     <i class="fa fa-search"></i>
@@ -36,10 +44,10 @@
     <a class="btn" id="searchdiv"><img src="/admin-panel/assets/img/icons/search.svg" alt="img"></a>
     </form>
     </div>
-    </li>
+    </li> --}}
 
 
-    <li class="nav-item dropdown has-arrow flag-nav">
+    {{-- <li class="nav-item dropdown has-arrow flag-nav">
     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
     <img src="/admin-panel/assets/img/flags/us1.png" alt="" height="20">
     </a>
@@ -57,10 +65,11 @@
     <img src="/admin-panel/assets/img/flags/de.png" alt="" height="16"> German
     </a>
     </div>
-    </li>
+    </li> --}}
 
+    
 
-    <li class="nav-item dropdown">
+    {{-- <li class="nav-item dropdown">
     <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
     <img src="/admin-panel/assets/img/icons/notification-bing.svg" alt="img"> <span class="badge rounded-pill">4</span>
     </a>
@@ -142,7 +151,7 @@
     <a href="activities.html">View all Notifications</a>
     </div>
     </div>
-    </li>
+    </li> --}}
 
     <li class="nav-item dropdown has-arrow main-drop">
     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">

@@ -9,11 +9,20 @@
         <li class="submenu">
             <a href="javascript:void(0);"><img src="/admin-panel/assets/img/icons/product.svg" alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
             <ul>
-                <li><a href="{{ route('products.index') }}">Product List</a></li>
+                <li><a href="{{ route('products.index') }}">Products</a></li>
            
-                <li><a href="{{ route('categories.index') }}">Category List</a></li>
+                <li><a href="{{ route('categories.index') }}">Categories</a></li>
             
-                <li><a href="{{ route('brands.index') }}">Brand List</a></li>
+                <li><a href="{{ route('brands.index') }}">Brands</a></li>
+
+                <li><a href="{{ route('collections.index') }}">Collections</a></li>
+
+                <li><a href="{{ route('banners.index') }}">Banners</a></li>
+
+
+                <li><a href="{{ route('sliders.index') }}">Sliders</a></li>
+
+                
 
             </ul>
         </li>
