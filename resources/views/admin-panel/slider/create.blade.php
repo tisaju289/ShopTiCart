@@ -7,7 +7,7 @@
         <div class="page-header">
             <div class="page-title">
                 <h4>Product Add Category</h4>
-                <h6><a href="{{ route('brands.index')}}">All Brand /</a> Create new product category</h6>
+                <h6><a href="{{ route('sliders.index')}}">All slider /</a> Create new product category</h6>
             </div>
         </div>
 
@@ -16,19 +16,38 @@
                 <div class="row">
 
                     <!-- Laravel form for creating a category -->
-                    <form action="{{ route('brands.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('sliders.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Brand Name *</label>
-                                <input type="text" name="name" class="form-control" id="brandName" placeholder="" required>
+                                <label>Select Product</label>
+                                <select name="product_id" class="form-control">
+                                    <option value="">Select a Product</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>slider title *</label>
+                                <input type="text" name="title" class="form-control" id="sliderName" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>slider sub title *</label>
+                                <input type="text" name="subtitle" class="form-control" id="sliderName" placeholder="" required>
                             </div>
                         </div>
 
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Slug (optional)</label>
-                                <input type="text" name="slug" class="form-control" id="brandSlug" placeholder="">
+                                <input type="text" name="slug" class="form-control" id="sliderSlug" placeholder="">
                             </div>
                         </div>
 
@@ -41,7 +60,7 @@
 
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Brand Image</label>
+                                <label>slider Image</label>
                                 <div class="image-upload">
                                     <input type="file" name="image" class="form-control-file" id="imageInput" accept="image/*">
                                     <div class="image-uploads">
@@ -74,10 +93,10 @@
 
 <script>
    
-    document.getElementById('brandName').addEventListener('input', function() {
+    document.getElementById('sliderName').addEventListener('input', function() {
         var name = this.value;
         var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-        document.getElementById('brandSlug').value = slug;
+        document.getElementById('sliderSlug').value = slug;
     });
 
    
